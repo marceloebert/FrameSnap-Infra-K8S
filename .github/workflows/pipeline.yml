@@ -1,0 +1,109 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGION_DEFAULT: us-east-1
+  CLUSTER_NAME: EKS-fastfood
+
+jobs:
+  deploy:
+    name: Deploying Infra k8s and App
+    runs-on: ubuntu-latest
+
+    environment: #Define a configuração de ambiente para este job.
+      name: AWS    
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.0 
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ env.REGION_DEFAULT }}
+
+      # Inicializar o backend e aplicar a infraestrutura de EKS
+      - name: Terraform Init - Infra k8s
+        working-directory: eks-fastfood
+        run: terraform init -reconfigure
+
+      - name: Terraform Plan - Infra k8s
+        working-directory: eks-fastfood
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply - Infra k8s
+        working-directory: eks-fastfood
+        run: terraform apply -auto-approve tfplan
+
+      # Configurar kubectl para acessar o cluster EKS
+      - name: Configure kubectl
+        run: |
+          aws eks update-kubeconfig --region ${{ env.REGION_DEFAULT }} --name ${{ env.CLUSTER_NAME }}
+          kubectl get nodes # Testar conexão com o cluster
+
+      # Esperar o cluster EKS estar ativo
+      - name: Wait for EKS Cluster to be available
+        run: |
+          echo "Waiting for EKS cluster to be ACTIVE..."
+          while true; do
+            STATUS=$(aws eks describe-cluster --name ${{ env.CLUSTER_NAME }} --query 'cluster.status' --output text)
+            echo "Cluster status: $STATUS"
+            if [ "$STATUS" == "ACTIVE" ]; then
+              echo "Cluster is ACTIVE. Proceeding..."
+              break
+            else
+              echo "Cluster not ready. Waiting 30 seconds..."
+              sleep 30
+            fi
+          done
+
+      # Inicializar e aplicar o Terraform para o App Order
+      - name: Terraform Init - App Order
+        working-directory: app-fastfood
+        run: terraform init -reconfigure
+
+      - name: Terraform Plan - App Order
+        working-directory: app-fastfood
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply - App Order
+        working-directory: app-fastfood
+        run: terraform apply -auto-approve tfplan
+
+        # Inicializar e aplicar o Terraform para o App Production
+      - name: Terraform Init - App Production
+        working-directory: app-fastfood-production
+        run: terraform init -reconfigure
+
+      - name: Terraform Plan - App Production
+        working-directory: app-fastfood-production
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply - App Production
+        working-directory: app-fastfood-production
+        run: terraform apply -auto-approve tfplan
+        
+        # Inicializar e aplicar o Terraform para o App Payment
+      - name: Terraform Init - App Payment
+        working-directory: app-fastfood-payment
+        run: terraform init -reconfigure
+
+      - name: Terraform Plan - App Payment
+        working-directory: app-fastfood-payment
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply - App Payment
+        working-directory: app-fastfood-payment
+        run: terraform apply -auto-approve tfplan

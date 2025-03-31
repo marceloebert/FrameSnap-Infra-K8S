@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-login-pod
+  namespace: default
+  labels:
+    app: api-login-pod
+spec:
+  template:
+    metadata:
+      name: api-login-pod
+      labels:
+        app: api-login-pod
+    spec:
+      containers:
+        - name:  c-api
+          image: 735083653075.dkr.ecr.us-east-1.amazonaws.com/api-framesnap-login:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: COGNITO_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: CLIENT-ID
+
+            - name: COGNITO_CLIENT_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key:  CLIENT-SECRET
+
+            - name: COGNITO_USER_POOL_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: USER-POOL-ID
+
+            - name: REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: REGION
+                  
+            - name: COGNITO_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: COGNITO_REGION
+
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: AWS_ACCESS_KEY_ID
+
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: AWS_SECRET_ACCESS_KEY
+
+            - name: AWS_SESSION_TOKEN
+              valueFrom:
+                configMapKeyRef:
+                  name: login-config
+                  key: AWS_SESSION_TOKEN
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 3
+            initialDelaySeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            periodSeconds: 10
+            failureThreshold: 5
+            initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 1m
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-login-pod

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: login-config
+  namespace: default
+  labels:
+    name: login-config
+data:
+  CLIENT-ID: "41vb4ljgmf4bhb8ogafjdjscst"
+  CLIENT-SECRET: "5qhg5sq91d2e68f6s3r13sht5kgar1co1lpd9b1eu01a5avdu9b"
+  USER-POOL-ID: "us-east-1_Srf0ZBtbc"
+  REGION: "us-east-1"
+  COGNITO_REGION: "us-east-1"
+  AWS_ACCESS_KEY_ID: "ASIA2WJTGM7JV4Y3LVQU"
+  AWS_SECRET_ACCESS_KEY: "NDvQuKjSs8tzdg0rt0EZyhhLrkBYDDU9qgCzH46i"
+  AWS_SESSION_TOKEN: "IQoJb3JpZ2luX2VjEAEaCXVzLXdlc3QtMiJHMEUCIQDlAG0BoZ00G7gDRmXJosVP0ICRsN3rJqVI1RcBMMz96AIgK46xCblhDbWw0IgGKN8vGPkas2Rp7HVBAPYjpOdFwCoqsQIIahAAGgw3MzUwODM2NTMwNzUiDFOLWz6zd4zcCQ+OeCqOAjq8UqgjBh1u+zKufdSwfBgpi2N3rT9B5OaokkZFpzHF7uN1uSCf5tnKSPpullxa5rE4CRjJofuMCIu0f6jbIBeWoTRBcU7njNFNXxT5lEkGtye6G85IsIoY6fx6Sn4kgpKm1BU1s34ThxZgRgJJwggFVckxbKVwJKBcyzFuuQflzQ42lm3Ceg1jzlnxYRNBPUEO8xczlHgS2hCUNW2JzSGBtFP99gvCQ0Q+KKI413fArpA64krPlG7cL4QM0+ozuusz7uhmVZHYbUeDQmg+CTe7nJsAYD3K9q8xA7D/s2LAU4ymmn9EGgEbdgrP06eGjfYy/PGP4hPFNEs2fK1t2/c+auoCfgvB+FeehAbK8TDOhp2/BjqdAZMnccciayH1rkuExcXa0twqsfCcBdtCWHqjHcUg4aulFTW7HdjpF9Q4W2nzJ74djWuAwaOMCcHXzNV4Ypcq4S9N8ZNVtdxWTxqaIEse0wngKcemQpc487SH6r7UhMzrO0TELIShqLJpgxG8V9ZWjetrlLUtLzs8VR+YdCR0KtzCInvGPs8egmp4YEDn+wF8aGzoP9mRri+bzZ4EN0g="
