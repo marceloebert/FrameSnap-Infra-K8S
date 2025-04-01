@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: api-production-svc
-  name: api-production-loadbalancer-svc
+    app: api-video-svc
+  name: api-video-svc
   namespace: default
 spec:
   ports:
@@ -11,5 +11,5 @@ spec:
     protocol: TCP
     targetPort: 8082
   selector:
-    app: api-pod-production
+    app: api-video-pod
   type: LoadBalancer

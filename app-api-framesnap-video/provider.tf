@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "app-fastfood-production-terraform-state"
+    bucket = "eks-framesnap-api-video-terraform-state"
     key    = "terraform.tfstate"
     region = "us-east-1"
   }
@@ -10,7 +10,7 @@ provider "aws" {
 }
 
 data "aws_eks_cluster" "eks" {
-  name = "EKS-fastfood" 
+  name = "EKS-FRAMESNAP" 
 }
 
 data "aws_eks_cluster_auth" "eks_auth" {
