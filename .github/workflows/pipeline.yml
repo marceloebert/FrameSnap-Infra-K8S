@@ -7,7 +7,7 @@ on:
 
 env:
   REGION_DEFAULT: us-east-1
-  CLUSTER_NAME: EKS-fastfood
+  CLUSTER_NAME: EKS-FRAMESNAP
 
 jobs:
   deploy:
@@ -36,15 +36,15 @@ jobs:
 
       # Inicializar o backend e aplicar a infraestrutura de EKS
       - name: Terraform Init - Infra k8s
-        working-directory: eks-fastfood
+        working-directory: eks-framesnap
         run: terraform init -reconfigure
 
       - name: Terraform Plan - Infra k8s
-        working-directory: eks-fastfood
+        working-directory: eks-framesnap
         run: terraform plan -out=tfplan
 
       - name: Terraform Apply - Infra k8s
-        working-directory: eks-fastfood
+        working-directory: eks-framesnap
         run: terraform apply -auto-approve tfplan
 
       # Configurar kubectl para acessar o cluster EKS
@@ -69,41 +69,29 @@ jobs:
             fi
           done
 
-      # Inicializar e aplicar o Terraform para o App Order
-      - name: Terraform Init - App Order
-        working-directory: app-fastfood
+      # Inicializar e aplicar o Terraform para o App Login
+      - name: Terraform Init - App Login
+        working-directory: app-api-framesnap-login
         run: terraform init -reconfigure
 
-      - name: Terraform Plan - App Order
-        working-directory: app-fastfood
+      - name: Terraform Plan - App Login
+        working-directory: app-api-framesnap-login
         run: terraform plan -out=tfplan
 
-      - name: Terraform Apply - App Order
-        working-directory: app-fastfood
+      - name: Terraform Apply - App Login
+        working-directory: app-api-framesnap-login
         run: terraform apply -auto-approve tfplan
 
-        # Inicializar e aplicar o Terraform para o App Production
-      - name: Terraform Init - App Production
-        working-directory: app-fastfood-production
+        # Inicializar e aplicar o Terraform para o App Video
+      - name: Terraform Init - App Video
+        working-directory: app-api-framesnap-video
         run: terraform init -reconfigure
 
-      - name: Terraform Plan - App Production
-        working-directory: app-fastfood-production
+      - name: Terraform Plan - App Video
+        working-directory: app-api-framesnap-video
         run: terraform plan -out=tfplan
 
-      - name: Terraform Apply - App Production
-        working-directory: app-fastfood-production
-        run: terraform apply -auto-approve tfplan
+      - name: Terraform Apply - App Video
+        working-directory: app-api-framesnap-video
+        run: terraform apply -auto-approve tfplan  
         
-        # Inicializar e aplicar o Terraform para o App Payment
-      - name: Terraform Init - App Payment
-        working-directory: app-fastfood-payment
-        run: terraform init -reconfigure
-
-      - name: Terraform Plan - App Payment
-        working-directory: app-fastfood-payment
-        run: terraform plan -out=tfplan
-
-      - name: Terraform Apply - App Payment
-        working-directory: app-fastfood-payment
-        run: terraform apply -auto-approve tfplan
