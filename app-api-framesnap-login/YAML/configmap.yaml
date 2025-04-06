@@ -6,9 +6,9 @@ metadata:
   labels:
     name: login-config
 data:
-  CLIENT-ID: "12fp667hsmiulr0e3ckc7jv5gd"
-  CLIENT-SECRET: "ih872vr71c3go7kmb94etpv0eufsfmlpam52rhi0jm4npt0es4g"
-  USER-POOL-ID: "us-east-1_8jQ8KtU4v"
+  CLIENT-ID: "1i18kr9udsgfv0qsv67phmvpep"
+  CLIENT-SECRET: "h8l0i965b7q8c4f23qp9gcqfk4l6fts91h6vsb0s5jrddvlbqko"
+  USER-POOL-ID: "us-east-1_Bdm36DaHe"
   REGION: "us-east-1"
   COGNITO_REGION: "us-east-1"
   AWS_ACCESS_KEY_ID: "ASIARVNBVJUFVIISTL6P"
