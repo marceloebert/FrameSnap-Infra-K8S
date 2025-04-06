@@ -15,7 +15,7 @@ variable "instanceType" {
 }
 
 variable "accountIdVoclabs" {
-  default = "735083653075"
+  default = "114692541707"
 }
 
 variable "policyArn" {
