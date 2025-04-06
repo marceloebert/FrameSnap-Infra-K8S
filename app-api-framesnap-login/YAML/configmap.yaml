@@ -8,7 +8,7 @@ metadata:
 data:
   CLIENT-ID: "12fp667hsmiulr0e3ckc7jv5gd"
   CLIENT-SECRET: "ih872vr71c3go7kmb94etpv0eufsfmlpam52rhi0jm4npt0es4g"
-  USER-POOL-ID: "us-east-1_Srf0ZBtbc"
+  USER-POOL-ID: "us-east-1_8jQ8KtU4v"
   REGION: "us-east-1"
   COGNITO_REGION: "us-east-1"
   AWS_ACCESS_KEY_ID: "ASIARVNBVJUFVIISTL6P"
