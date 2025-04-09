@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name:  c-api
-          image: 735083653075.dkr.ecr.us-east-1.amazonaws.com/api-framesnap-login:latest
+          image: 114692541707.dkr.ecr.us-east-1.amazonaws.com/api-framesnap-login:latest
           ports:
             - containerPort: 8080
           env:
